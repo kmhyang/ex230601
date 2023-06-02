@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- DOCTYPE configuration : root element -->
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="jdbcTypeForNull" value="VARCHAR" />
+	</settings>
+	
+	<!-- 패키지 스캔해서 자동으로 alias 설정해줌 -->
+	<typeAliases>
+  <package name="com.yedam.app"/>
+</typeAliases>
+</configuration>
+<!-- ==>root context에 읽을 수 있도록 등록해야됨. -->

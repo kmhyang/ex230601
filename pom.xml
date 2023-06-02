@@ -179,6 +179,12 @@
 			<version>2.0.6</version>
 		</dependency>
 
+		<!-- spring mybatis log4j2 : sql 실행 확인할 수 있는 설정 -->
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+			<version>1.16</version>
+		</dependency>
 
 	</dependencies>
 

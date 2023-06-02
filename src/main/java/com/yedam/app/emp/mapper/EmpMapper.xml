@@ -2,11 +2,106 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.yedam.app.emp.mapper.EmpMapper">
-  	<select id="selectOne" resultType="com.yedam.app.emp.service.EmpVO">
-  		select employee_id, first_name, last_name
-  		from employees
-  		where employee_id = #{empNo}
-  	</select>
-  </mapper>
+
+<mapper namespace="com.yedam.app.emp.mapper.EmpMapper">
+	<sql id="empWhere">
+		<where>
+			<if test="departmentId != null and departmentId !='' ">
+				<!-- and department_id = #{departmentId} -->
+				and department_id in
+				<!-- in 안에서 받아오는 param 반복 -->
+				<foreach open="(" close=")" collection="deptArr" item="dept"
+					separator=",">#{dept}</foreach>
+				<!-- #{dept} : getDeptArr를 가르킴 (foreach item = dept라서) -->
+			</if>
+			<if test="firstName != null and firstName !='' ">
+				and first_name like '%${firstName}%' <!-- $ : ''없이 파라미터 넘어온 값이 들어감. -->
+				<!-- and first_name like '%' || #{firstName} || '%' -->
+				<!-- #{firstName} - => 'e' 자동으로 ''붙여줌 -->
+				<!-- first_name 안에 포함된 문자 찾기 -->
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insertEmp">
+		<selectKey keyProperty="employeeId" resultType="string"
+			order="BEFORE">
+			select max(employee_id)+1 from employees
+		</selectKey>
+		insert into employees(EMPLOYEE_ID,FIRST_NAME,LAST_NAME, EMAIL,
+		HIRE_DATE, JOB_ID, department_id)
+		values(#{employeeId},
+		#{firstName},#{lastName}, #{email}, sysdate, #{jobId},
+		#{departmentId})
+	</insert>
+
+	<select id="selectCount" resultType="int">
+		select count(*) from employees
+		<include refid="empWhere"></include>
+	</select>
+
+	<select id="selectList" resultType="EmpVO"> <!-- empVO : 소문자도 가능 -->
+		select employee_id, first_name, last_name, email, TO_CHAR(HIRE_DATE,'yyyy-mm-dd') HIRE_DATE,
+		department_id, job_id
+		from employees
+
+		<!-- where절 -->
+		<include refid="empWhere"></include>
+
+
+		<choose>
+			<when test="orderColumn != null and orderColumn !='' ">
+				order by ${orderColumn}
+			</when>
+			<otherwise>
+				order by employee_id
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="selectOne" parameterType="int" resultType="EmpVO"><!-- parameterType 
+			생략 가능. -->
+		select EMPLOYEE_ID,
+						FIRST_NAME,
+						LAST_NAME,
+						EMAIL,
+						PHONE_NUMBER,
+						TO_CHAR(HIRE_DATE,'yyyy-mm-dd') HIRE_DATE,
+						JOB_ID,
+						SALARY,
+						COMMISSION_PCT,
+						MANAGER_ID,
+						DEPARTMENT_ID
+		from employees
+		where
+		employee_id = #{employeeId}
+	</select>
+
+	<select id="selectJobs" resultType="map"> <!-- 컬럼명 : key, 값 : value -->
+		select job_id "jobId", job_title "jobTitle"
+		from jobs
+		order by 2
+	</select>
+
+	<select id="selectDept" resultType="map">
+		select department_id
+		"departmentId", department_name "departmentName"
+		from departments
+		order
+		by 2
+	</select>
+
+	<delete id="deleteEmp" parameterType="int">
+		delete employees
+		where
+		employee_id = #{employeeId}
+	</delete>
+
+	<update id="updateEmp" parameterType="EmpVO">
+		update employees
+		set first_name = #{firstName},
+				last_name = #{lastName},
+				email = #{email}
+		where employee_id = #{employeeId}
+	</update>
+</mapper>

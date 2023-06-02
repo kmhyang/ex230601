@@ -7,27 +7,40 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	
+	<!-- ★☆★☆★☆★☆ -->
+	<!-- mvc(model, view, controller)설정과 관련된 여러 처리를 담당하는 설정 파일로 
+			 DAO, VO, service 등과 같은 파일을 어떻게 사용할 것인가 
+			 빈(객체)들을 관리하는 문서 
+	-->
+	
+	
 	<!-- db property -->
-	<!-- datasource connection pool --><!-- db 정보를 가지고 있음 // 커넥션 풀??-->
+	<!-- data-source connection pool --><!-- db 정보를 가지고 있음 // 커넥션 풀 설정하는 부분-->
+	<!-- 최소, 대기시간, 접근 많으면 끊을지 등. 설정 가능 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-	  <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-	  <property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+	  <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+	  <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@127.0.0.1:1521:xe" /> <!-- :log4jdbc 추가 -->
 	  <property name="username" value="hr" />
 	  <property name="password" value="hr" />
 	</bean>
 	
-	<!-- db 연결 -->
+	<!-- db 연결 --> <!-- 커넥션 풀을 만듦 --> <!-- DBCP?? -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 	  <constructor-arg ref="hikariConfig" />
 	</bean>
 	
-	<!-- mybatis  SqlSessionFactory --> <!-- sql문을 보냄? -->
+	<!-- mybatis  SqlSessionFactory --> 
+	<!-- mapper.xml sql 실행 -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
 	  <property name="dataSource" ref="dataSource"/>
+	  <property name="configLocation" value="classpath:mybatis-config.xml"></property> <!-- resources - mybatis-config.xml 읽어옴. -->
 	</bean>
 
 
-	<!--  mapper scan --><!-- DAO?? -->
+	<!--  mapper scan -->
+	<!-- (인터페이스)DAO -> 구현 클래스를 만들어줌 -->
+	<!-- 패키지 명이 변경되면 같이 바꿔줘야 함. -->
 	<mybatis-spring:scan base-package="com.yedam.app.**.mapper" />
 
 	

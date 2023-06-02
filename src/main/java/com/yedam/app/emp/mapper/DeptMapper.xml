@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.emp.mapper.DeptMapper">
+	<sql id="deptwhere">
+		<where>
+			<if test="location_id !=null and location_id !='' ">
+				and location_id in
+				<foreach open="(" close=")" collection="locArr" item="loc"
+					separator=",">#{loc}</foreach>
+			</if>
+			<if test="departmentName != null and departmentName !='' ">
+				and department_name like '%${departmentName}'
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectDeptList" resultType="DeptVO">
+		select DEPARTMENT_ID,
+		DEPARTMENT_NAME,
+		MANAGER_ID,
+		LOCATION_ID
+		from departments
+
+		<!-- where -->
+		<include refid="deptwhere"></include>
+
+		<choose>
+		<when test="orderColumn != null and orderColumn !='' ">
+			order by ${orderColumn} <!-- $ : 자료형 그대로 가져옴(string, int 등) -->
+			<!-- # : 무조건 String -->
+		</when>
+		<otherwise>
+		order by 1
+		</otherwise>
+		</choose>
+	</select>
+	<!-- 부서번호는 10씩 증가하도록 -->
+</mapper>

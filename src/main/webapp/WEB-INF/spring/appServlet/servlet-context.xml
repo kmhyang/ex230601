@@ -9,6 +9,14 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
+	
+	<!-- ★☆★☆★☆★☆ -->
+	<!-- 
+			웹 어플리케이션에서 클라이언트의 요청을 받기 위한 컨텍스트 설정이며, 
+			요청과 관련된 객체를 정의
+	 -->
+	 
+	 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<!-- 컨트롤러를 읽어옴 (@controller) -->
 	<annotation-driven />
@@ -17,13 +25,16 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
-	<!--  -->
+	<!-- 컨트롤러가 지정한 뷰.jsp를 사용함 -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="prefix" value="/WEB-INF/views/" /> <!-- WEB-INF/views/ : prefix -->
+		<beans:property name="suffix" value=".jsp" />						 <!-- "view 이름".jsp :suffix-->
 	</beans:bean>
+		<!--/WEB-INF/views/index.jsp  -->	
+		<!-- prefix/index.suffix -->
 	
+	<!-- 패키지 명 --> <!-- 컴포넌트 스캔 : 객체 생성 -> Spring 컨테이너에 설정-->
 	<context:component-scan base-package="com.yedam.app" />
 	
 	
