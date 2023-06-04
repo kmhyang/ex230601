@@ -84,8 +84,7 @@
 	</select>
 
 	<select id="selectDept" resultType="map">
-		select department_id
-		"departmentId", department_name "departmentName"
+		select department_id "departmentId", department_name "departmentName"
 		from departments
 		order
 		by 2

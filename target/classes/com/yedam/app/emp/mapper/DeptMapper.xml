@@ -18,9 +18,9 @@
 
 	<select id="selectDeptList" resultType="DeptVO">
 		select DEPARTMENT_ID,
-		DEPARTMENT_NAME,
-		MANAGER_ID,
-		LOCATION_ID
+				DEPARTMENT_NAME,
+				MANAGER_ID,
+				LOCATION_ID
 		from departments
 
 		<!-- where -->
@@ -36,5 +36,54 @@
 		</otherwise>
 		</choose>
 	</select>
+	
 	<!-- 부서번호는 10씩 증가하도록 -->
+	<insert id="insertDept">
+		<selectKey keyProperty="departmentId" resultType="string" order="BEFORE">
+			select max(department_id+10) from departments
+		</selectKey>
+		insert into employees(DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID)
+		values(#{departmentId},#{departmentName},#{managerId},#{locationId})
+	</insert>
+	
+	<select id="selectCount" resultType="int">
+		select count(*) from departments
+		<!-- where -->
+		<include refid="deptwhere"></include>
+	</select>
+	
+	<select id="selectDeptOne" parameterType="int" resultType="DeptVO">
+		select DEPARTMENT_ID,
+				DEPARTMENT_NAME,
+				MANAGER_ID,
+				LOCATION_ID
+		from departments
+		where department_id = #{departmentId}
+	</select>
+	
+	<select id="selectEmp" resultType="map">
+		SELECT DISTINCT a.first_name "firstName", a.last_name "lastName", b.manager_id "managerId"
+		FROM employees a
+		JOIN employees b
+		ON a.employee_id = b.manager_id
+		WHERE a.first_name IS NOT NULL AND a.last_name IS NOT NULL AND b.manager_id IS NOT NULL
+		order by 3
+	</select>
+	
+	<select id="selectLoc" resultType="map">
+		select location_id "locationId", city "city"
+		from locations
+		order by 1
+	</select>
+	
+	<delete id="deleteDept" parameterType="int">
+		delete departments
+		where department_id = #{departmentId}
+	</delete>
+	
+	<update id ="updateDept" parameterType="DeptVO">
+		update departments
+		set department_name = #{departmentName}
+		where department_id = #{departmentId}
+	</update>
 </mapper>
