@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.yedam.app.emp.mapper.DeptMapper;
 import com.yedam.app.emp.service.DeptVO;
+import com.yedam.app.emp.service.EmpVO;
 
 @Controller
 public class DeptController {
@@ -19,4 +20,41 @@ public class DeptController {
 		model.addAttribute("deptList",deptMapper.selectDeptList(vo));
 		return "dept/deptList";
 	}
+	
+	//부서 등록 페이지 이동
+	@GetMapping("detpInsert")
+	public String deptInsertForm(Model model) {
+		model.addAttribute("managers", deptMapper.selectEmp());
+		model.addAttribute("locations", deptMapper.selectLoc());
+		return "dept/deptInsert";
+	}
+	
+	@PostMapping("detpInsert")
+	public String deptInsert(DeptVO vo) {
+		deptMapper.insertDept(vo);
+		return "redirect:deptList";
+	}
+	
+	//부서 수정 페이지
+	@GetMapping("detpUpdate")
+	public String deptUpdate(Model model, int deptId) {
+		model.addAttribute("dept", deptMapper.selectDeptOne(deptId));
+		model.addAttribute("managers", deptMapper.selectEmp());
+		model.addAttribute("locations", deptMapper.selectLoc());
+		return "dept/deptUpdate";
+	}
+
+	//부서 수정 처리detpUpdate
+	@PostMapping("empUpdate")
+	public String deptUpdate(DeptVO vo) {
+		deptMapper.updateDept(vo);
+		return "redirect:deptList";
+	}
+	
+	@GetMapping("deptDelete")
+	public String empDelete(@RequestParam int deptId) { 
+		deptMapper.deleteDept(deptId);
+		return "redirect:deptList";
+	}
+
 }
