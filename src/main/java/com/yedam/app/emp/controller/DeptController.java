@@ -23,21 +23,21 @@ public class DeptController {
 	}
 	
 	//부서 등록 페이지 이동
-	@GetMapping("detpInsert")
+	@GetMapping("deptInsert")
 	public String deptInsertForm(Model model) {
 		model.addAttribute("managers", deptMapper.selectEmp());
 		model.addAttribute("locations", deptMapper.selectLoc());
 		return "dept/deptInsert";
 	}
 	
-	@PostMapping("detpInsert")
+	@PostMapping("deptInsert")
 	public String deptInsert(DeptVO vo) {
 		deptMapper.insertDept(vo);
 		return "redirect:deptList";
 	}
 	
 	//부서 수정 페이지
-	@GetMapping("detpUpdate")
+	@GetMapping("deptUpdate")
 	public String deptUpdate(Model model, int deptId) {
 		model.addAttribute("dept", deptMapper.selectDeptOne(deptId));
 		model.addAttribute("managers", deptMapper.selectEmp());
@@ -46,7 +46,7 @@ public class DeptController {
 	}
 
 	//부서 수정 처리detpUpdate
-	@PostMapping("empUpdate")
+	@PostMapping("deptUpdate")
 	public String deptUpdate(DeptVO vo) {
 		deptMapper.updateDept(vo);
 		return "redirect:deptList";

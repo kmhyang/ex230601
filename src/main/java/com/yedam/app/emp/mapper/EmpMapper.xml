@@ -73,8 +73,7 @@
 						MANAGER_ID,
 						DEPARTMENT_ID
 		from employees
-		where
-		employee_id = #{employeeId}
+		where	employee_id = #{employeeId}
 	</select>
 
 	<select id="selectJobs" resultType="map"> <!-- 컬럼명 : key, 값 : value -->

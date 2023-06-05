@@ -10,11 +10,10 @@
 <body>
 <h3>사원 수정</h3>
 <form action="deptUpdate" method="post" name="frm">
-		사원 번호 <input name="departmentId" readonly="readonly" value="${dept.departmentId}"><br>
-		부서명  <input name="departmentName"><br>
+		부서 번호 <input name="departmentId" readonly="readonly" value="${dept.departmentId}"><br>
+		부서명  <input name="departmentName" value="${dept.departmentName }"><br>
 		<br>
 		managerId <br>
-		
 		<select name="managerId">
 		<option value="">사수</option>
 		<c:forEach items="${managers}" var="m">

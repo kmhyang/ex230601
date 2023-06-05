@@ -5,7 +5,7 @@
 <mapper namespace="com.yedam.app.emp.mapper.DeptMapper">
 	<sql id="deptwhere">
 		<where>
-			<if test="location_id !=null and location_id !='' ">
+			<if test="locationId !=null and locationId !='' ">
 				and location_id in
 				<foreach open="(" close=")" collection="locArr" item="loc"
 					separator=",">#{loc}</foreach>
@@ -42,7 +42,7 @@
 		<selectKey keyProperty="departmentId" resultType="string" order="BEFORE">
 			select max(department_id+10) from departments
 		</selectKey>
-		insert into employees(DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID)
+		insert into departments(DEPARTMENT_ID,DEPARTMENT_NAME,MANAGER_ID,LOCATION_ID)
 		values(#{departmentId},#{departmentName},#{managerId},#{locationId})
 	</insert>
 	
@@ -53,10 +53,10 @@
 	</select>
 	
 	<select id="selectDeptOne" parameterType="int" resultType="DeptVO">
-		select DEPARTMENT_ID,
-				DEPARTMENT_NAME,
-				MANAGER_ID,
-				LOCATION_ID
+		select department_id,
+				department_name,
+				manager_id,
+				location_id
 		from departments
 		where department_id = #{departmentId}
 	</select>
