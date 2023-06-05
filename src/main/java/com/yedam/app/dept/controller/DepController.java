@@ -96,7 +96,7 @@ public class DepController {
 	//수정 - 기능 : POST
 	@PostMapping("depUpdate") 
 	@ResponseBody //비동기방식 처리
-	public Map<String, Object> depUpdate(@RequestBody List<DepVO> vo, RedirectAttributes rtt) {
+	public Map<String, Object> depUpdate(@RequestBody List<DepVO> vo) {
 		return depService.updateDeptList(vo);
 		
 		//동기방식 처리
