@@ -95,11 +95,12 @@ public class DepController {
 //	Jackson 라이브러리 : json?
 	//수정 - 기능 : POST
 	@PostMapping("depUpdate") 
-	@ResponseBody //비동기방식 처리
-	public Map<String, Object> depUpdate(@RequestBody List<DepVO> vo) {
+	@ResponseBody //비동기방식 처리 // 받는 형태가 data인 경우?????
+	public Map<String, Object> depUpdate(@RequestBody List<DepVO> vo) { //@RequestBody : 나한테 넘어오는 값이 ?? 
 		return depService.updateDeptList(vo);
 		
 		//동기방식 처리
+		//String은 json 형태 사용 못함. json은 객체 형태로만 가능.
 //		public String depUpdate(@RequestBody List<DepVO> vo, RedirectAttributes rtt) {
 //		Map<String, Object> map = depService.updateDeptList(vo);
 //		rtt.addFlashAttribute("updateRes", map);
