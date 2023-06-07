@@ -8,10 +8,10 @@
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<setting name="jdbcTypeForNull" value="VARCHAR" />
 	</settings>
-	
+
 	<!-- 패키지 스캔해서 자동으로 alias 설정해줌 -->
 	<typeAliases>
-  <package name="com.yedam.app"/>
-</typeAliases>
+		<package name="com.yedam.app" />
+	</typeAliases>
 </configuration>
 <!-- ==>root context에 읽을 수 있도록 등록해야됨. -->
