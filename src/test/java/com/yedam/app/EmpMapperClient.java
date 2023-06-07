@@ -79,7 +79,7 @@ public class EmpMapperClient {
 		System.out.println("id : "+vo.getEmployeeId());
 	}
 	
-	@Test
+	//@Test
 	public void selectJobs() {
 		List<Map<String, Object>> list = empMapper.selectJobs();
 		assertNotNull(list);

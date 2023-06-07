@@ -10,7 +10,8 @@
 	<!-- 컨테이너 만들때 참고할 위치 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>/WEB-INF/spring/*-context.xml</param-value>
+		<!-- <param-value>/WEB-INF/spring/root-context.xml</param-value> -->
 	</context-param>
 
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->

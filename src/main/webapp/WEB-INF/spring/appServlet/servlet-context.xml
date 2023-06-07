@@ -30,13 +30,28 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" /> <!-- WEB-INF/views/ : prefix -->
 		<beans:property name="suffix" value=".jsp" />						 <!-- "view 이름".jsp :suffix-->
+		<beans:property name="order" value="2"/> <!-- 우선순위 tiles 다음으로 실행 -->
 	</beans:bean>
 		<!--/WEB-INF/views/index.jsp  -->	
 		<!-- prefix/index.suffix -->
 	
-	<!-- 패키지 명 --> <!-- 컴포넌트 스캔 : 객체 생성 -> Spring 컨테이너에 설정-->
-	<context:component-scan base-package="com.yedam.app" />
+	<!-- tiles 관련 -->
+	 <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	   <beans:property name="definitions">
+	     <beans:list>
+	       <beans:value>/WEB-INF/tiles.xml</beans:value>
+	     </beans:list>
+	   </beans:property>
+	 </beans:bean>
+	 
+	 <beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"> <!-- 경로 마지막 이름이 ID : 소문자로 시작 -->
+	 		<beans:property name="order" value="1"/> <!-- 우선순위 : tiles 1번째 -> jsp 2번째 -->
+	 </beans:bean>
 	
+	<!-- 패키지 명 --> <!-- 컴포넌트 스캔 : 객체 생성 -> Spring 컨테이너에 설정-->
+	<context:component-scan base-package="com.yedam.app">
+		<context:exclude-filter type="aspectj" expression="com.yedam.app.aop.*"/>
+	</context:component-scan>
 	
 	
 </beans:beans>

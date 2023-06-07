@@ -55,7 +55,6 @@ public class EmpController {
 	public String empInsert(EmpVO vo) {
 		empMapper.insertEmp(vo);
 		return "redirect:empList"; //getMapping("empList")로 돌아감.
-		
 //		return "emp/empList"; //forward
 	}
 	

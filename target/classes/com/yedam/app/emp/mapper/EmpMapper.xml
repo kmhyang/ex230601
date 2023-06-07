@@ -28,11 +28,8 @@
 			order="BEFORE">
 			select max(employee_id)+1 from employees
 		</selectKey>
-		insert into employees(EMPLOYEE_ID,FIRST_NAME,LAST_NAME, EMAIL,
-		HIRE_DATE, JOB_ID, department_id)
-		values(#{employeeId},
-		#{firstName},#{lastName}, #{email}, sysdate, #{jobId},
-		#{departmentId})
+		insert into employees(EMPLOYEE_ID,FIRST_NAME,LAST_NAME, EMAIL,HIRE_DATE, JOB_ID, department_id)
+		values(#{employeeId},#{firstName},#{lastName}, #{email}, sysdate, #{jobId},#{departmentId})
 	</insert>
 
 	<select id="selectCount" resultType="int">
@@ -48,13 +45,12 @@
 		<!-- where절 -->
 		<include refid="empWhere"></include>
 
-
 		<choose>
 			<when test="orderColumn != null and orderColumn !='' ">
-				order by ${orderColumn}
+				order by ${orderColumn} desc
 			</when>
 			<otherwise>
-				order by employee_id
+				order by employee_id desc
 			</otherwise>
 		</choose>
 	</select>
@@ -79,20 +75,18 @@
 	<select id="selectJobs" resultType="map"> <!-- 컬럼명 : key, 값 : value -->
 		select job_id "jobId", job_title "jobTitle"
 		from jobs
-		order by 2
+		order by 2 desc
 	</select>
 
 	<select id="selectDept" resultType="map">
 		select department_id "departmentId", department_name "departmentName"
 		from departments
-		order
-		by 2
-	</select>
+		order	by 2 desc
+	</select> 
 
 	<delete id="deleteEmp" parameterType="int">
 		delete employees
-		where
-		employee_id = #{employeeId}
+		where	employee_id = #{employeeId}
 	</delete>
 
 	<update id="updateEmp" parameterType="EmpVO">
