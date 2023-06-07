@@ -73,7 +73,8 @@
 		formTag.append(inputTag);
 	}
 
-	// let delBtnList = Array.from(document.getElementsByTagName('button')).filter(item => item.id != 'checkDel'); //type=button인 모든 버튼 중에서 checkDel을 제외한 버튼
+	// let delBtnList = Array.from(document.getElementsByTagName('button')).filter(item => item.id != 'checkDel'); 
+	//type=button인 모든 버튼 중에서 checkDel을 제외한 버튼
 	let delBtnList = Array.from(document.querySelectorAll('#delBtn'))
 
 	delBtnList.forEach(el=>{
