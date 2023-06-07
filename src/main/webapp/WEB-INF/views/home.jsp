@@ -7,10 +7,6 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
-<a href="empList">회원 관리</a>
-<a href="depList">부서 관리</a>
+
 </body>
 </html>

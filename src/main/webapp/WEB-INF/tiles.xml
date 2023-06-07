@@ -3,11 +3,11 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	<definition name="main" template="/WEB-INF/views/tiles/layout.jsp"> <!-- name : 절대로 사용하지 않을 이름으로 설정. -->
-		
+	<definition name="mainTemplate" template="/WEB-INF/views/tiles/layout.jsp"> <!-- name : 절대로 사용하지 않을 이름으로 설정. -->
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp"/>	
 	</definition>
 	
-	<definition name="emp/*" extends="main">
-	
+	<definition name="*/*" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	</definition>
 </tiles-definitions>
