@@ -40,11 +40,12 @@ public class DepController {
 //	@RequestMapping(value = "/depList")
 	@GetMapping("depList")
 //	public String getDeptAllList(Model model) {
-	public String getDeptAllList(@RequestParam(required=false) String msg,Model model, HttpServletRequest request) {
+	public String getDeptAllList(@RequestParam(required=false) String msg, Model model, HttpServletRequest request) {
 		model.addAttribute("depList",depService.getAllDept());
 		
 		System.out.println("redirect : "+msg);
 		
+		//데이터를 숨기면서 다른 controller로 보내는 방법
 		Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request); //? : Object
 		if(flashMap != null) {
 			System.out.println("department_id : "+flashMap.get("departmentId"));
